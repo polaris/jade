@@ -17,10 +17,18 @@ public:
     typedef std::size_t size_type;
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
+
+    vector(std::initializer_list<T> c) : vector() {
+        resize(c.size());
+        std::copy(c.begin(), c.end(), data_);
+        size_ = c.size();
+    }
+
     vector(const vector& other) : data_(nullptr), capacity_(other.capacity_), size_(other.size_) {
         data_ = new value_type[capacity_];
         memcpy(data_, other.data_, size_ * sizeof(value_type));
     }
+
     virtual ~vector() {
         if (data_) {
             assert(capacity_ > 0);
@@ -40,17 +48,23 @@ public:
     }
 
     constexpr size_type size() const { return size_; }
+
     constexpr size_type capacity() const { return capacity_; }
+
+    void resize(std::size_t count) {
+        pointer data = new value_type[count];
+        size_ = std::min(size_, count);
+        capacity_ = count;
+        memcpy(data, data_, size_ * sizeof(value_type));
+        delete[] data_;
+        data_ = data;
+    }
 
     void push_back(const_reference value) {
         if (size_ == capacity_) {
             if (capacity_ != 0) {
                 const size_type new_size = 2 * capacity_;
-                pointer data = new value_type[new_size];
-                memcpy(data, data_, size_ * sizeof(value_type));
-                delete[] data_;
-                data_ = data;
-                capacity_ = new_size;
+                resize(new_size);
             } else {
                 capacity_ = 1;
                 data_ = new value_type[capacity_];
@@ -59,10 +73,30 @@ public:
         data_[size_++] = value;
     }
 
+    reference operator[](size_type pos) { return data_[pos]; }
+
+    constexpr const_reference operator[](size_type pos) const { return data_[pos]; }
+
+    reference at(size_type pos) {
+        if (!(pos < size())) {
+            throw std::out_of_range("postion out of range");
+        }
+        return data_[pos];
+    }
+
+    constexpr const_reference at(size_type pos) const {
+        if (!(pos < size())) {
+            throw std::out_of_range("position out of range");
+        }
+        return data_[pos];
+    }
+
     constexpr iterator begin() noexcept { return data_; }
+
     constexpr const_iterator begin() const noexcept { return data_; }
 
     constexpr iterator end() noexcept { return data_ + size_; }
+
     constexpr const_iterator end() const noexcept { return data_ + size_; }
 
 private:

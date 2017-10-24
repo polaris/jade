@@ -78,3 +78,41 @@ TEST_CASE("capacity doubles everytime the size increases to the current max. cap
     REQUIRE(v.size() == 9);
     REQUIRE(v.capacity() == 16);
 }
+
+TEST_CASE("constructor with initializer list", "[vector]") {
+    jade::vector<int> v = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    REQUIRE(v.capacity() == 9);
+    REQUIRE(v.size() == 9);
+    REQUIRE(v[0] == 1);
+    REQUIRE(v[1] == 2);
+    REQUIRE(v[2] == 3);
+    REQUIRE(v[3] == 4);
+    REQUIRE(v[4] == 5);
+    REQUIRE(v[5] == 6);
+    REQUIRE(v[6] == 7);
+    REQUIRE(v[7] == 8);
+    REQUIRE(v[8] == 9);
+}
+
+TEST_CASE("a vector is resizable", "[vector]") {
+    jade::vector<int> v;
+    v.resize(16);
+    REQUIRE(v.capacity() == 16);
+    REQUIRE(v.size() == 0);
+}
+
+// TEST_CASE("a vector is resizable 2", "[vector]") {
+//     jade::vector<int> v;
+//     v.resize(0);
+//     REQUIRE(v.capacity() == 0);
+//     REQUIRE(v.size() == 0);
+// }
+
+TEST_CASE("at method checks bounds of vector", "[vector]") {
+    jade::vector<int> v = { 1, 2, 3, 4, 5 };
+    REQUIRE_THROWS_AS(v.at(-1), std::out_of_range);
+    REQUIRE_NOTHROW(v.at(0));
+    REQUIRE_NOTHROW(v.at(2));
+    REQUIRE_NOTHROW(v.at(4));
+    REQUIRE_THROWS_AS(v.at(5), std::out_of_range);
+}

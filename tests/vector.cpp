@@ -52,6 +52,22 @@ TEST_CASE("assignement operator", "[vector]") {
     }
 }
 
+TEST_CASE("move assignement operator", "[vector]") {
+    jade::vector<int> v1{1,2,3};
+    REQUIRE(v1.size() == 3);
+    REQUIRE(v1.capacity() == 3);
+
+    jade::vector<int> v2{4,5,6,7,8};
+    REQUIRE(v2.size() == 5);
+    REQUIRE(v2.capacity() == 5);
+
+    v1 = std::move(v2);
+    REQUIRE(v1.size() == 5);
+    REQUIRE(v1.capacity() == 5);
+    REQUIRE(v2.size() == 0);
+    REQUIRE(v2.capacity() == 0);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

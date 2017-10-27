@@ -56,7 +56,17 @@ public:
         }
     }
 
-    vector& operator=(vector other) {
+    vector& operator=(const vector& other) {
+        resize(0);
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        data_ = new value_type[capacity_];
+        memcpy(data_, other.data_, size_ * sizeof(value_type));
+        return *this;
+    }
+
+    vector& operator=(vector&& other) {
+        resize(0);
         other.swap(*this);
         return *this;
     }

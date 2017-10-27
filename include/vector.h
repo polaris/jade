@@ -18,6 +18,13 @@ public:
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
 
+    explicit vector(size_type count, const T& value = T()) : vector() {
+        resize(count);
+        for (size_type i = 0; i < count; ++i) {
+            push_back(value);
+        }
+    }
+
     vector(std::initializer_list<T> c) : vector() {
         resize(c.size());
         std::copy(c.begin(), c.end(), data_);

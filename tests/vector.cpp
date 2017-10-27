@@ -94,6 +94,25 @@ TEST_CASE("constructor with initializer list", "[vector]") {
     REQUIRE(v[8] == 9);
 }
 
+TEST_CASE("vector can be constructed with a number copies of elements with a certain value", "[vector]") {
+    SECTION("default value", "[vector]") {
+        jade::vector<int> v1(50);
+        REQUIRE(v1.capacity() == 50);
+        REQUIRE(v1.size() == 50);
+        for (const auto i : v1) {
+            REQUIRE(i == 0);
+        }
+    }
+    SECTION("provided value", "[vector]") {
+        jade::vector<int> v1(50, 123);
+        REQUIRE(v1.capacity() == 50);
+        REQUIRE(v1.size() == 50);
+        for (const auto i : v1) {
+            REQUIRE(i == 123);
+        }
+    }
+}
+
 TEST_CASE("a vector is resizable", "[vector]") {
     jade::vector<int> v;
     v.resize(16);

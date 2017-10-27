@@ -37,6 +37,12 @@ public:
         memcpy(data_, other.data_, size_ * sizeof(value_type));
     }
 
+    vector(vector&& other) noexcept : data_(other.data_), capacity_(other.capacity_), size_(other.size_) {
+        other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
+    }
+
     vector(std::initializer_list<T> c) : vector() {
         resize(c.size());
         std::copy(c.begin(), c.end(), data_);

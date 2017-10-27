@@ -113,6 +113,18 @@ TEST_CASE("vector can be constructed with a number copies of elements with a cer
     }
 }
 
+TEST_CASE("move constructor", "[vector]") {
+    jade::vector<int> v1 = { 1, 2, 3 };
+    REQUIRE(v1.size() == 3);
+    REQUIRE(v1.capacity() == 3);
+
+    jade::vector<int> v2{std::move(v1)};
+    REQUIRE(v1.size() == 0);
+    REQUIRE(v1.capacity() == 0);
+    REQUIRE(v2.size() == 3);
+    REQUIRE(v2.capacity() == 3);
+}
+
 TEST_CASE("a vector is resizable", "[vector]") {
     jade::vector<int> v;
     v.resize(16);

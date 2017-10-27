@@ -50,10 +50,7 @@ public:
     }
 
     virtual ~vector() {
-        if (data_) {
-            assert(capacity_ > 0);
-            delete[] data_;
-        }
+        resize(0);
     }
 
     vector& operator=(const vector& other) {

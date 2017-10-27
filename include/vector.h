@@ -52,10 +52,13 @@ public:
     constexpr size_type capacity() const { return capacity_; }
 
     void resize(std::size_t count) {
-        pointer data = new value_type[count];
+        pointer data = nullptr;
+        if (count > 0) {
+            data = new value_type[count];
+            memcpy(data, data_, size_ * sizeof(value_type));
+        }
         size_ = std::min(size_, count);
         capacity_ = count;
-        memcpy(data, data_, size_ * sizeof(value_type));
         delete[] data_;
         data_ = data;
     }

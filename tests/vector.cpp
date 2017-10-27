@@ -101,12 +101,42 @@ TEST_CASE("a vector is resizable", "[vector]") {
     REQUIRE(v.size() == 0);
 }
 
-// TEST_CASE("a vector is resizable 2", "[vector]") {
-//     jade::vector<int> v;
-//     v.resize(0);
-//     REQUIRE(v.capacity() == 0);
-//     REQUIRE(v.size() == 0);
-// }
+TEST_CASE("a new vector is resizable to zero", "[vector]") {
+    jade::vector<int> v;
+    v.resize(0);
+    REQUIRE(v.capacity() == 0);
+    REQUIRE(v.size() == 0);
+}
+
+TEST_CASE("resizing a vector keeps it consistent", "[vector]") {
+    jade::vector<int> v;
+    REQUIRE(v.capacity() == 0);
+    REQUIRE(v.size() == 0);
+
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    REQUIRE(v.capacity() == 4);
+    REQUIRE(v.size() == 3);
+
+    v.resize(16);
+    REQUIRE(v.capacity() == 16);
+    REQUIRE(v.size() == 3);
+
+    v.resize(0);
+    REQUIRE(v.capacity() == 0);
+    REQUIRE(v.size() == 0);
+
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    REQUIRE(v.capacity() == 4);
+    REQUIRE(v.size() == 3);
+
+    v.resize(16);
+    REQUIRE(v.capacity() == 16);
+    REQUIRE(v.size() == 3);
+}
 
 TEST_CASE("at method checks bounds of vector", "[vector]") {
     jade::vector<int> v = { 1, 2, 3, 4, 5 };

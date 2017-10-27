@@ -18,7 +18,14 @@ public:
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
 
-    explicit vector(size_type count, const T& value = T()) : vector() {
+    vector(size_type count) : vector() {
+        resize(count);
+        for (size_type i = 0; i < count; ++i) {
+            push_back(T());
+        }
+    }
+
+    vector(size_type count, const T& value) : vector() {
         resize(count);
         for (size_type i = 0; i < count; ++i) {
             push_back(value);

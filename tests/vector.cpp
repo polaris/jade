@@ -95,7 +95,7 @@ TEST_CASE("constructor with initializer list", "[vector]") {
 }
 
 TEST_CASE("vector can be constructed with a number copies of elements with a certain value", "[vector]") {
-    SECTION("default value", "[vector]") {
+    SECTION("default-inserted instances of T", "[vector]") {
         jade::vector<int> v1(50);
         REQUIRE(v1.capacity() == 50);
         REQUIRE(v1.size() == 50);
@@ -103,7 +103,7 @@ TEST_CASE("vector can be constructed with a number copies of elements with a cer
             REQUIRE(i == 0);
         }
     }
-    SECTION("provided value", "[vector]") {
+    SECTION("copies of provided value", "[vector]") {
         jade::vector<int> v1(50, 123);
         REQUIRE(v1.capacity() == 50);
         REQUIRE(v1.size() == 50);

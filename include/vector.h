@@ -32,15 +32,15 @@ public:
         }
     }
 
+    vector(const vector& other) : data_(nullptr), capacity_(other.capacity_), size_(other.size_) {
+        data_ = new value_type[capacity_];
+        memcpy(data_, other.data_, size_ * sizeof(value_type));
+    }
+
     vector(std::initializer_list<T> c) : vector() {
         resize(c.size());
         std::copy(c.begin(), c.end(), data_);
         size_ = c.size();
-    }
-
-    vector(const vector& other) : data_(nullptr), capacity_(other.capacity_), size_(other.size_) {
-        data_ = new value_type[capacity_];
-        memcpy(data_, other.data_, size_ * sizeof(value_type));
     }
 
     virtual ~vector() {

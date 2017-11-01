@@ -83,6 +83,10 @@ TEST_CASE("initializer list assginment operator") {
     REQUIRE(v[1] == 5);
     REQUIRE(v[2] == 6);
     REQUIRE(v[3] == 7);
+
+    v = {};
+    REQUIRE(v.size() == 0);
+    REQUIRE(v.capacity() == 0);
 }
 
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {

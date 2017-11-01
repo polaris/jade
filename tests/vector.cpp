@@ -25,6 +25,13 @@ TEST_CASE("copy construct a new vector", "[vector]") {
     }
 }
 
+TEST_CASE("a vector can be constructed using a pair of iterators") {
+    int arr[5] = {1,2,3,4,5};
+    jade::vector<int> v{arr, arr+5};
+    REQUIRE(v.size() == 5);
+    REQUIRE(v.capacity() == 5);
+}
+
 TEST_CASE("assignment operator", "[vector]") {
     jade::vector<int> v1;
     v1.push_back(1);

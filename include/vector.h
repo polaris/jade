@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <cassert>
+#include <iterator>
 
 namespace jade {
 
@@ -29,6 +30,14 @@ public:
         resize(count);
         for (size_type i = 0; i < count; ++i) {
             push_back(value);
+        }
+    }
+
+    template<typename InputIt, typename = typename std::iterator_traits<InputIt>::value_type>
+    vector(InputIt first, InputIt last) : vector() {
+        resize(last - first);
+        for (; first != last; ++first) {
+            push_back(*first);
         }
     }
 

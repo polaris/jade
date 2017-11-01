@@ -18,7 +18,7 @@ public:
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
 
-    vector(size_type count) : vector() {
+    explicit vector(size_type count) : vector() {
         resize(count);
         for (size_type i = 0; i < count; ++i) {
             push_back(T());

@@ -68,6 +68,12 @@ public:
         return *this;
     }
 
+    vector& operator=(std::initializer_list<T> list) {
+        vector tmp(list);
+        tmp.swap(*this);
+        return *this;
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

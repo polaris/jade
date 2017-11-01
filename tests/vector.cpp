@@ -25,7 +25,7 @@ TEST_CASE("copy construct a new vector", "[vector]") {
     }
 }
 
-TEST_CASE("assignement operator", "[vector]") {
+TEST_CASE("assignment operator", "[vector]") {
     jade::vector<int> v1;
     v1.push_back(1);
     v1.push_back(2);
@@ -52,7 +52,7 @@ TEST_CASE("assignement operator", "[vector]") {
     }
 }
 
-TEST_CASE("move assignement operator", "[vector]") {
+TEST_CASE("move assignment operator", "[vector]") {
     jade::vector<int> v1{1,2,3};
     REQUIRE(v1.size() == 3);
     REQUIRE(v1.capacity() == 3);

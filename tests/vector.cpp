@@ -96,6 +96,36 @@ TEST_CASE("initializer list assginment operator") {
     REQUIRE(v.capacity() == 0);
 }
 
+TEST_CASE("assign replaces contents with a number of values") {
+    jade::vector<int> v{1,2,3};
+    REQUIRE(v.size() == 3);
+    REQUIRE(v.capacity() == 3);
+    REQUIRE(v[0] == 1);
+    REQUIRE(v[1] == 2);
+    REQUIRE(v[2] == 3);
+
+    v.assign(5, 123);
+    REQUIRE(v.size() == 5);
+    REQUIRE(v.capacity() == 5);
+    for (const auto i : v) {
+        REQUIRE(i == 123);
+    }
+}
+
+TEST_CASE("a vector can be assigned using a pair of iterators") {
+    jade::vector<int> v{1,2,3};
+    REQUIRE(v.size() == 3);
+    REQUIRE(v.capacity() == 3);
+    REQUIRE(v[0] == 1);
+    REQUIRE(v[1] == 2);
+    REQUIRE(v[2] == 3);
+
+    int arr[5] = {1,2,3,4,5};
+    v.assign(arr, arr+5);
+    REQUIRE(v.size() == 5);
+    REQUIRE(v.capacity() == 5);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

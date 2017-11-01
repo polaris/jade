@@ -83,6 +83,17 @@ public:
         return *this;
     }
 
+    void assign(size_type count, const T& value) {
+        vector tmp(count, value);
+        tmp.swap(*this);
+    }
+
+    template<typename InputIt, typename = typename std::iterator_traits<InputIt>::value_type>
+    void assign(InputIt first, InputIt last) {
+        vector tmp(first, last);
+        tmp.swap(*this);
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

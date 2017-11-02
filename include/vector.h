@@ -94,6 +94,11 @@ public:
         tmp.swap(*this);
     }
 
+    void assign(std::initializer_list<T> list) {
+        vector tmp(list);
+        tmp.swap(*this);
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

@@ -126,6 +126,19 @@ TEST_CASE("a vector can be assigned using a pair of iterators") {
     REQUIRE(v.capacity() == 5);
 }
 
+TEST_CASE("a vector can be assigned using an initializer list") {
+    jade::vector<int> v{1,2,3};
+    REQUIRE(v.size() == 3);
+    REQUIRE(v.capacity() == 3);
+    REQUIRE(v[0] == 1);
+    REQUIRE(v[1] == 2);
+    REQUIRE(v[2] == 3);
+
+    v.assign({1,2,3,4,5});
+    REQUIRE(v.size() == 5);
+    REQUIRE(v.capacity() == 5);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

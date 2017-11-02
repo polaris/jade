@@ -117,6 +117,14 @@ public:
 
     constexpr const_reference operator[](size_type pos) const { return data_[pos]; }
 
+    reference front() {
+        return data_[0];
+    }
+
+    const_reference front() const {
+        return data_[0];
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

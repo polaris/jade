@@ -158,6 +158,14 @@ TEST_CASE("References to an element at a specified location is returned by the i
     }
 }
 
+TEST_CASE("front returns a reference to the first element in the container") {
+    jade::vector<int> v1{123};
+    REQUIRE(v1.front() == 123);
+
+    jade::vector<int> v2{9,8,7,6,5,4,3,2,1,0};
+    REQUIRE(v2.front() == 9);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

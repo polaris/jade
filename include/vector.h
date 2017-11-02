@@ -125,6 +125,14 @@ public:
         return data_[0];
     }
 
+    reference back() {
+        return data_[size_-1];
+    }
+
+    const_reference back() const {
+        return data_[size_-1];
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

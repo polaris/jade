@@ -139,6 +139,15 @@ TEST_CASE("a vector can be assigned using an initializer list") {
     REQUIRE(v.capacity() == 5);
 }
 
+TEST_CASE("at method checks bounds of vector", "[vector]") {
+    jade::vector<int> v = { 1, 2, 3, 4, 5 };
+    REQUIRE_THROWS_AS(v.at(-1), std::out_of_range);
+    REQUIRE_NOTHROW(v.at(0));
+    REQUIRE_NOTHROW(v.at(2));
+    REQUIRE_NOTHROW(v.at(4));
+    REQUIRE_THROWS_AS(v.at(5), std::out_of_range);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);
@@ -254,13 +263,4 @@ TEST_CASE("resizing a vector keeps it consistent", "[vector]") {
     v.resize(16);
     REQUIRE(v.capacity() == 16);
     REQUIRE(v.size() == 3);
-}
-
-TEST_CASE("at method checks bounds of vector", "[vector]") {
-    jade::vector<int> v = { 1, 2, 3, 4, 5 };
-    REQUIRE_THROWS_AS(v.at(-1), std::out_of_range);
-    REQUIRE_NOTHROW(v.at(0));
-    REQUIRE_NOTHROW(v.at(2));
-    REQUIRE_NOTHROW(v.at(4));
-    REQUIRE_THROWS_AS(v.at(5), std::out_of_range);
 }

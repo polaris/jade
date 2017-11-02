@@ -99,6 +99,20 @@ public:
         tmp.swap(*this);
     }
 
+    reference at(size_type pos) {
+        if (!(pos < size())) {
+            throw std::out_of_range("postion out of range");
+        }
+        return data_[pos];
+    }
+
+    constexpr const_reference at(size_type pos) const {
+        if (!(pos < size())) {
+            throw std::out_of_range("position out of range");
+        }
+        return data_[pos];
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);
@@ -137,20 +151,6 @@ public:
     reference operator[](size_type pos) { return data_[pos]; }
 
     constexpr const_reference operator[](size_type pos) const { return data_[pos]; }
-
-    reference at(size_type pos) {
-        if (!(pos < size())) {
-            throw std::out_of_range("postion out of range");
-        }
-        return data_[pos];
-    }
-
-    constexpr const_reference at(size_type pos) const {
-        if (!(pos < size())) {
-            throw std::out_of_range("position out of range");
-        }
-        return data_[pos];
-    }
 
     constexpr iterator begin() noexcept { return data_; }
 

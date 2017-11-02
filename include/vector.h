@@ -141,6 +141,18 @@ public:
         return data_;
     }
 
+    constexpr iterator begin() noexcept { return data_; }
+
+    constexpr const_iterator begin() const noexcept { return data_; }
+
+    constexpr const_iterator cbegin() const noexcept { return data_; }
+
+    constexpr iterator end() noexcept { return data_ + size_; }
+
+    constexpr const_iterator end() const noexcept { return data_ + size_; }
+
+    constexpr const_iterator cend() const noexcept { return data_ + size_; }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);
@@ -175,14 +187,6 @@ public:
         }
         data_[size_++] = value;
     }
-
-    constexpr iterator begin() noexcept { return data_; }
-
-    constexpr const_iterator begin() const noexcept { return data_; }
-
-    constexpr iterator end() noexcept { return data_ + size_; }
-
-    constexpr const_iterator end() const noexcept { return data_ + size_; }
 
 private:
     pointer data_;

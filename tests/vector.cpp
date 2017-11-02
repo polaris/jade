@@ -185,6 +185,30 @@ TEST_CASE("data returns pointer to the underlying array serving as element stora
     }
 }
 
+TEST_CASE("begin returns an iterator to the first element of the container; end returns an iterator to the element after the last element of the container", "[vector]") {
+    SECTION("non-const begin and end", "[vector]") {
+        jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 0;
+        for (auto it = v.begin(); it != v.end(); ++it) {
+            REQUIRE(*it == v[i++]);
+        }
+    }
+    SECTION("const begin and end", "[vector]") {
+        const jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 0;
+        for (auto it = v.begin(); it != v.end(); ++it) {
+            REQUIRE(*it == v[i++]);
+        }
+    }
+    SECTION("cbegin and cend", "[vector]") {
+        const jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 0;
+        for (auto it = v.cbegin(); it != v.cend(); ++it) {
+            REQUIRE(*it == v[i++]);
+        }
+    }
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

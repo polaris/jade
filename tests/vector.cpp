@@ -100,9 +100,6 @@ TEST_CASE("assign replaces contents with a number of values") {
     jade::vector<int> v{1,2,3};
     REQUIRE(v.size() == 3);
     REQUIRE(v.capacity() == 3);
-    REQUIRE(v[0] == 1);
-    REQUIRE(v[1] == 2);
-    REQUIRE(v[2] == 3);
 
     v.assign(5, 123);
     REQUIRE(v.size() == 5);
@@ -116,9 +113,6 @@ TEST_CASE("a vector can be assigned using a pair of iterators") {
     jade::vector<int> v{1,2,3};
     REQUIRE(v.size() == 3);
     REQUIRE(v.capacity() == 3);
-    REQUIRE(v[0] == 1);
-    REQUIRE(v[1] == 2);
-    REQUIRE(v[2] == 3);
 
     int arr[5] = {1,2,3,4,5};
     v.assign(arr, arr+5);
@@ -130,9 +124,6 @@ TEST_CASE("a vector can be assigned using an initializer list") {
     jade::vector<int> v{1,2,3};
     REQUIRE(v.size() == 3);
     REQUIRE(v.capacity() == 3);
-    REQUIRE(v[0] == 1);
-    REQUIRE(v[1] == 2);
-    REQUIRE(v[2] == 3);
 
     v.assign({1,2,3,4,5});
     REQUIRE(v.size() == 5);

@@ -113,6 +113,10 @@ public:
         return data_[pos];
     }
 
+    reference operator[](size_type pos) { return data_[pos]; }
+
+    constexpr const_reference operator[](size_type pos) const { return data_[pos]; }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);
@@ -147,10 +151,6 @@ public:
         }
         data_[size_++] = value;
     }
-
-    reference operator[](size_type pos) { return data_[pos]; }
-
-    constexpr const_reference operator[](size_type pos) const { return data_[pos]; }
 
     constexpr iterator begin() noexcept { return data_; }
 

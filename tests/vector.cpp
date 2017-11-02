@@ -174,6 +174,17 @@ TEST_CASE("back returns a reference to the last element in the container") {
     REQUIRE(v2.back() == 0);
 }
 
+TEST_CASE("data returns pointer to the underlying array serving as element storage", "[vector]") {
+    jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+    REQUIRE(v.size() == 10);
+    REQUIRE(v.capacity() == 10);
+    const auto data = v.data();
+    jade::vector<int>::size_type i = 0;
+    for (; i < v.size(); ++i) {
+        REQUIRE(i == data[i]);
+    }
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

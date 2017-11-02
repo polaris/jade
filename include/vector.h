@@ -133,6 +133,14 @@ public:
         return data_[size_-1];
     }
 
+    T* data() noexcept {
+        return data_;
+    }
+
+    const T* data() const noexcept {
+        return data_;
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

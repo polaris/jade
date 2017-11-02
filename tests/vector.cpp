@@ -148,6 +148,16 @@ TEST_CASE("at method checks bounds of vector", "[vector]") {
     REQUIRE_THROWS_AS(v.at(5), std::out_of_range);
 }
 
+TEST_CASE("References to an element at a specified location is returned by the index operator", "[vector]") {
+    jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+    REQUIRE(v.size() == 10);
+    REQUIRE(v.capacity() == 10);
+    jade::vector<int>::size_type i = 0;
+    for (; i < v.size(); ++i) {
+        REQUIRE(i == v[i]);
+    }
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

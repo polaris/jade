@@ -10,12 +10,64 @@ template <typename T>
 class vector {
 public:
     typedef T value_type;
-    typedef T* iterator;
-    typedef const T* const_iterator;
     typedef T& reference;
     typedef const T& const_reference;
     typedef T* pointer;
     typedef std::size_t size_type;
+
+    class iterator {
+    public:
+        typedef T& reference;
+        typedef T* pointer;
+
+        iterator() : data_(nullptr) {}
+        iterator(pointer data) : data_(data) {}
+        iterator(const iterator& other) : data_(other.data_) {}
+        ~iterator() {}
+
+        iterator& operator=(const iterator& other) {
+            this->data_ = other.data_;
+            return *this;
+        }
+        bool operator==(const iterator& other) const { return this->data_ == other.data_; }
+        bool operator!=(const iterator& other) const { return !(*this == other); }
+        iterator& operator++() {
+            data_++;
+            return *this;
+        }
+        reference operator*() const { return *data_; }
+        pointer operator->() const { return data_; }
+
+    private:
+        pointer data_;
+    };
+
+    class const_iterator {
+    public:
+        typedef const T& reference;
+        typedef const T* pointer;
+
+        const_iterator() : data_(nullptr) {}
+        const_iterator(pointer data) : data_(data) {}
+        const_iterator(const const_iterator& other) : data_(other.data_) {}
+        ~const_iterator() {}
+
+        const_iterator& operator=(const const_iterator& other) {
+            this->data_ = other.data_;
+            return *this;
+        }
+        bool operator==(const const_iterator& other) const { return this->data_ == other.data_; }
+        bool operator!=(const const_iterator& other) const { return !(*this == other); }
+        const_iterator& operator++() {
+            data_++;
+            return *this;
+        }
+        reference operator*() const { return *data_; }
+        pointer operator->() const { return data_; }
+
+    private:
+        pointer data_;
+    };
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
 

@@ -193,17 +193,17 @@ public:
         return data_;
     }
 
-    constexpr iterator begin() noexcept { return data_; }
+    constexpr iterator begin() noexcept { return iterator(data_); }
 
-    constexpr const_iterator begin() const noexcept { return data_; }
+    constexpr const_iterator begin() const noexcept { return const_iterator(data_); }
 
-    constexpr const_iterator cbegin() const noexcept { return data_; }
+    constexpr const_iterator cbegin() const noexcept { return const_iterator(data_); }
 
-    constexpr iterator end() noexcept { return data_ + size_; }
+    constexpr iterator end() noexcept { return iterator(data_ + size_); }
 
-    constexpr const_iterator end() const noexcept { return data_ + size_; }
+    constexpr const_iterator end() const noexcept { return const_iterator(data_ + size_); }
 
-    constexpr const_iterator cend() const noexcept { return data_ + size_; }
+    constexpr const_iterator cend() const noexcept { return const_iterator(data_ + size_); }
 
     void swap(vector& other) {
         std::swap(data_, other.data_);

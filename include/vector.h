@@ -273,13 +273,13 @@ public:
 
     bool empty() const noexcept { return size_ == 0; }
 
+    constexpr size_type size() const { return size_; }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);
         std::swap(size_, other.size_);
     }
-
-    constexpr size_type size() const { return size_; }
 
     constexpr size_type capacity() const { return capacity_; }
 

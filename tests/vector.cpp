@@ -200,6 +200,30 @@ TEST_CASE("begin returns an iterator to the first element of the container; end 
     }
 }
 
+TEST_CASE("rbegin returns an iterator to the last element of the container; rend returns an iterator to the element before the first element of the container", "[vector]") {
+    SECTION("non-const rbegin and rend", "[vector]") {
+        jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 9;
+        for (auto it = v.rbegin(); it != v.rend(); ++it) {
+            REQUIRE(*it == v[i--]);
+        }
+    }
+    SECTION("const rbegin and rend", "[vector]") {
+        const jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 9;
+        for (auto it = v.rbegin(); it != v.rend(); ++it) {
+            REQUIRE(*it == v[i--]);
+        }
+    }
+    SECTION("crbegin and crend", "[vector]") {
+        const jade::vector<int> v{0,1,2,3,4,5,6,7,8,9};
+        jade::vector<int>::size_type i = 9;
+        for (auto it = v.crbegin(); it != v.crend(); ++it) {
+            REQUIRE(*it == v[i--]);
+        }
+    }
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

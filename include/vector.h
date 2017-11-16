@@ -275,6 +275,8 @@ public:
 
     constexpr size_type size() const noexcept { return size_; }
 
+    // constexpr size_type max_size() const noexcept;
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

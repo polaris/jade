@@ -273,7 +273,7 @@ public:
 
     bool empty() const noexcept { return size_ == 0; }
 
-    constexpr size_type size() const { return size_; }
+    constexpr size_type size() const noexcept { return size_; }
 
     void swap(vector& other) {
         std::swap(data_, other.data_);

@@ -126,14 +126,14 @@ public:
     vector() : data_(nullptr), capacity_(0), size_(0) {}
 
     explicit vector(size_type count) : vector() {
-        resize(count);
+        reserve(count);
         for (size_type i = 0; i < count; ++i) {
             push_back(T());
         }
     }
 
     vector(size_type count, const T& value) : vector() {
-        resize(count);
+        reserve(count);
         for (size_type i = 0; i < count; ++i) {
             push_back(value);
         }
@@ -141,7 +141,7 @@ public:
 
     template<typename InputIt, typename = typename std::iterator_traits<InputIt>::value_type>
     vector(InputIt first, InputIt last) : vector() {
-        resize(last - first);
+        reserve(last - first);
         for (; first != last; ++first) {
             push_back(*first);
         }
@@ -159,17 +159,17 @@ public:
     }
 
     vector(std::initializer_list<T> c) : vector() {
-        resize(c.size());
+        reserve(c.size());
         std::copy(c.begin(), c.end(), data_);
         size_ = c.size();
     }
 
     virtual ~vector() {
-        resize(0);
+        cleanup();
     }
 
     vector& operator=(const vector& other) {
-        resize(0);
+        cleanup();
         capacity_ = other.capacity_;
         size_ = other.size_;
         data_ = new value_type[capacity_];
@@ -178,7 +178,7 @@ public:
     }
 
     vector& operator=(vector&& other) {
-        resize(0);
+        cleanup();
         other.swap(*this);
         return *this;
     }
@@ -277,31 +277,29 @@ public:
 
     // constexpr size_type max_size() const noexcept;
 
+    void reserve(std::size_t count) {
+        if (count > capacity_) {
+            pointer data = new value_type[count];
+            memcpy(data, data_, size_ * sizeof(value_type));
+            capacity_ = count;
+            delete[] data_;
+            data_ = data;
+        }
+    }
+
+    constexpr size_type capacity() const { return capacity_; }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);
         std::swap(size_, other.size_);
     }
 
-    constexpr size_type capacity() const { return capacity_; }
-
-    void resize(std::size_t count) {
-        pointer data = nullptr;
-        if (count > 0) {
-            data = new value_type[count];
-            memcpy(data, data_, size_ * sizeof(value_type));
-        }
-        size_ = std::min(size_, count);
-        capacity_ = count;
-        delete[] data_;
-        data_ = data;
-    }
-
     void push_back(const_reference value) {
         if (size_ == capacity_) {
             if (capacity_ != 0) {
                 const size_type new_size = 2 * capacity_;
-                resize(new_size);
+                reserve(new_size);
             } else {
                 capacity_ = 1;
                 data_ = new value_type[capacity_];
@@ -314,6 +312,13 @@ private:
     pointer data_;
     size_type capacity_;
     size_type size_;
+
+    void cleanup() {
+        size_ = 0;
+        capacity_ = 0;
+        delete[] data_;
+        data_ = nullptr;
+    }
 };
 
 }  // namespace jade

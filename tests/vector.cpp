@@ -228,13 +228,14 @@ TEST_CASE("empty() signals whether the container is empty or not", "[vector]") {
     jade::vector<int> v;
     REQUIRE(v.empty() == true);
 
-    v.resize(10);
+    v.reserve(10);
     REQUIRE(v.empty() == true);
 
     v.push_back(123);
     REQUIRE(v.empty() == false);
 
-    v.resize(0);
+    jade::vector<int> u;
+    v.swap(u);
     REQUIRE(v.empty() == true);
 }
 
@@ -313,14 +314,14 @@ TEST_CASE("move constructor", "[vector]") {
 
 TEST_CASE("a vector is resizable", "[vector]") {
     jade::vector<int> v;
-    v.resize(16);
+    v.reserve(16);
     REQUIRE(v.capacity() == 16);
     REQUIRE(v.size() == 0);
 }
 
 TEST_CASE("a new vector is resizable to zero", "[vector]") {
     jade::vector<int> v;
-    v.resize(0);
+    v.reserve(0);
     REQUIRE(v.capacity() == 0);
     REQUIRE(v.size() == 0);
 }
@@ -336,11 +337,12 @@ TEST_CASE("resizing a vector keeps it consistent", "[vector]") {
     REQUIRE(v.capacity() == 4);
     REQUIRE(v.size() == 3);
 
-    v.resize(16);
+    v.reserve(16);
     REQUIRE(v.capacity() == 16);
     REQUIRE(v.size() == 3);
 
-    v.resize(0);
+    jade::vector<int> u;
+    v.swap(u);
     REQUIRE(v.capacity() == 0);
     REQUIRE(v.size() == 0);
 
@@ -350,7 +352,7 @@ TEST_CASE("resizing a vector keeps it consistent", "[vector]") {
     REQUIRE(v.capacity() == 4);
     REQUIRE(v.size() == 3);
 
-    v.resize(16);
+    v.reserve(16);
     REQUIRE(v.capacity() == 16);
     REQUIRE(v.size() == 3);
 }

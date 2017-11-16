@@ -224,6 +224,20 @@ TEST_CASE("rbegin returns an iterator to the last element of the container; rend
     }
 }
 
+TEST_CASE("empty() signals whether the container is empty or not", "[vector]") {
+    jade::vector<int> v;
+    REQUIRE(v.empty() == true);
+
+    v.resize(10);
+    REQUIRE(v.empty() == true);
+
+    v.push_back(123);
+    REQUIRE(v.empty() == false);
+
+    v.resize(0);
+    REQUIRE(v.empty() == true);
+}
+
 TEST_CASE("capacity doubles everytime the size increases to the current max. capacity", "[vector]") {
     jade::vector<int> v;
     v.push_back(1);

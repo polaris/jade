@@ -271,6 +271,8 @@ public:
 
     constexpr const_reverse_iterator crend() const noexcept { return const_reverse_iterator(data_ - 1); }
 
+    bool empty() const noexcept { return size_ == 0; }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

@@ -290,6 +290,16 @@ public:
         }
     }
 
+    void shrink_to_fit() {
+        if (size_ > 0 && size_ < capacity_) {
+            auto data = std::unique_ptr<value_type[]>(new value_type[size_]);
+            std::memcpy(data.get(), data_, size_ * sizeof(value_type));
+            capacity_ = size_;
+            delete[] data_;
+            data_ = data.release();
+        }
+    }
+
     constexpr size_type capacity() const { return capacity_; }
 
     void swap(vector& other) {

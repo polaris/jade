@@ -356,3 +356,16 @@ TEST_CASE("resizing a vector keeps it consistent", "[vector]") {
     REQUIRE(v.capacity() == 16);
     REQUIRE(v.size() == 3);
 }
+
+TEST_CASE("shrink_to_fit() reduces capacity to size", "[vector]") {
+    jade::vector<int> v;
+    REQUIRE(v.capacity() == 0);
+
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+    REQUIRE(v.capacity() == 4);
+
+    v.shrink_to_fit();
+    REQUIRE(v.capacity() == 3);
+}

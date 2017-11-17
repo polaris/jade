@@ -290,6 +290,8 @@ public:
         }
     }
 
+    constexpr size_type capacity() const { return capacity_; }
+
     void shrink_to_fit() {
         if (size_ > 0 && size_ < capacity_) {
             auto data = std::unique_ptr<value_type[]>(new value_type[size_]);
@@ -299,8 +301,6 @@ public:
             data_ = data.release();
         }
     }
-
-    constexpr size_type capacity() const { return capacity_; }
 
     void swap(vector& other) {
         std::swap(data_, other.data_);

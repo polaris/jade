@@ -302,6 +302,10 @@ public:
         }
     }
 
+    void clear() noexcept {
+        size_ = 0;
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

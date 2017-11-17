@@ -369,3 +369,10 @@ TEST_CASE("shrink_to_fit() reduces capacity to size", "[vector]") {
     v.shrink_to_fit();
     REQUIRE(v.capacity() == 3);
 }
+
+TEST_CASE("clear() removes all elements from the container", "[vector]") {
+    jade::vector<int> v{1,2,3,4,5,6,7,8,9};
+    REQUIRE(v.size() == 9);
+    v.clear();
+    REQUIRE(v.size() == 0);
+}

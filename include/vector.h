@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iterator>
+#include <memory>
 
 namespace jade {
 
@@ -279,11 +280,13 @@ public:
 
     void reserve(std::size_t count) {
         if (count > capacity_) {
-            pointer data = new value_type[count];
-            memcpy(data, data_, size_ * sizeof(value_type));
+            assert(count > size_);
+
+            auto data = std::unique_ptr<value_type[]>(new value_type[count]);
+            std::memcpy(data.get(), data_, size_ * sizeof(value_type));
             capacity_ = count;
             delete[] data_;
-            data_ = data;
+            data_ = data.release();
         }
     }
 

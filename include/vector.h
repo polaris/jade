@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iterator>
 #include <memory>
+#include <functional>
 
 namespace jade {
 
@@ -20,98 +21,110 @@ public:
 
     class iterator {
     public:
-        iterator() : data_(nullptr) {}
-        explicit iterator(pointer data) : data_(data) {}
-        iterator(const iterator& other) : data_(other.data_) {}
+        iterator() : pos_(0) {}
+        explicit iterator(std::reference_wrapper<vector> data) : data_(data), pos_(0) {}
+        iterator(std::reference_wrapper<vector> data, size_type pos) : data_(data), pos_(pos) {}
+        iterator(const iterator& other) : data_(other.data_), pos_(other.pos_) {}
         ~iterator() {}
 
         iterator& operator=(const iterator& other) {
             this->data_ = other.data_;
+            this->pos_ = other.pos_;
             return *this;
         }
-        bool operator==(const iterator& other) const { return this->data_ == other.data_; }
+        bool operator==(const iterator& other) const { return &this->data_.get() == &other.data_.get() && this->pos_ == other.pos_; }
         bool operator!=(const iterator& other) const { return !(*this == other); }
         iterator& operator++() {
-            data_++;
+            pos_++;
             return *this;
         }
-        const_reference operator*() const { return *data_; }
-        const_pointer operator->() const { return data_; }
+        reference operator*() const { return *(data_.get().data_ + pos_); }
+        pointer operator->() const { return data_.get().data_ + pos_; }
 
     private:
-        pointer data_;
+        std::reference_wrapper<vector> data_;
+        size_type pos_;
     };
 
     class const_iterator {
     public:
-        const_iterator() : data_(nullptr) {}
-        explicit const_iterator(pointer data) : data_(data) {}
-        const_iterator(const const_iterator& other) : data_(other.data_) {}
+        const_iterator() : pos_(0) {}
+        explicit const_iterator(std::reference_wrapper<const vector> data) : data_(data), pos_(0) {}
+        const_iterator(std::reference_wrapper<const vector> data, size_type pos) : data_(data), pos_(pos) {}
+        const_iterator(const const_iterator& other) : data_(other.data_), pos_(other.pos_) {}
         ~const_iterator() {}
 
         const_iterator& operator=(const const_iterator& other) {
             this->data_ = other.data_;
+            this->pos_ = other.pos_;
             return *this;
         }
-        bool operator==(const const_iterator& other) const { return this->data_ == other.data_; }
+        bool operator==(const const_iterator& other) const { return &this->data_.get() == &other.data_.get() && this->pos_ == other.pos_; }
         bool operator!=(const const_iterator& other) const { return !(*this == other); }
         const_iterator& operator++() {
-            data_++;
+            pos_++;
             return *this;
         }
-        const_reference operator*() const { return *data_; }
-        const_pointer operator->() const { return data_; }
+        const_reference operator*() const { return *(data_.get().data_ + pos_); }
+        const_pointer operator->() const { return data_.get().data_ + pos_; }
 
     private:
-        pointer data_;
+        std::reference_wrapper<const vector> data_;
+        size_type pos_;
     };
 
     class reverse_iterator {
     public:
-        reverse_iterator() : data_(nullptr) {}
-        explicit reverse_iterator(pointer data) : data_(data) {}
-        reverse_iterator(const reverse_iterator& other) : data_(other.data_) {}
+        reverse_iterator() : pos_(0) {}
+        explicit reverse_iterator(std::reference_wrapper<vector> data) : data_(data), pos_(0) {}
+        reverse_iterator(std::reference_wrapper<vector> data, size_type pos) : data_(data), pos_(pos) {}
+        reverse_iterator(const reverse_iterator& other) : data_(other.data_), pos_(other.pos_) {}
         ~reverse_iterator() {}
 
         reverse_iterator& operator=(const reverse_iterator& other) {
             this->data_ = other.data_;
+            this->pos_ = other.pos_;
             return *this;
         }
-        bool operator==(const reverse_iterator& other) const { return this->data_ == other.data_; }
+        bool operator==(const reverse_iterator& other) const { return &this->data_.get() == &other.data_.get() && this->pos_ == other.pos_; }
         bool operator!=(const reverse_iterator& other) const { return !(*this == other); }
         reverse_iterator& operator++() {
-            data_--;
+            pos_--;
             return *this;
         }
-        const_reference operator*() const { return *data_; }
-        const_pointer operator->() const { return data_; }
+        reference operator*() const { return *(data_.get().data_ + pos_); }
+        pointer operator->() const { return data_.get().data_ + pos_; }
 
     private:
-        pointer data_;
+        std::reference_wrapper<vector> data_;
+        size_type pos_;
     };
 
     class const_reverse_iterator {
     public:
-        const_reverse_iterator() : data_(nullptr) {}
-        explicit const_reverse_iterator(pointer data) : data_(data) {}
-        const_reverse_iterator(const const_reverse_iterator& other) : data_(other.data_) {}
+        const_reverse_iterator() : pos_(0) {}
+        explicit const_reverse_iterator(std::reference_wrapper<const vector> data) : data_(data), pos_(0) {}
+        const_reverse_iterator(std::reference_wrapper<const vector> data, size_type pos) : data_(data), pos_(pos) {}
+        const_reverse_iterator(const const_reverse_iterator& other) : data_(other.data_), pos_(other.pos_) {}
         ~const_reverse_iterator() {}
 
         const_reverse_iterator& operator=(const const_reverse_iterator& other) {
             this->data_ = other.data_;
+            this->pos_ = other.pos_;
             return *this;
         }
-        bool operator==(const const_reverse_iterator& other) const { return this->data_ == other.data_; }
+        bool operator==(const const_reverse_iterator& other) const { return &this->data_.get() == &other.data_.get() && this->pos_ == other.pos_; }
         bool operator!=(const const_reverse_iterator& other) const { return !(*this == other); }
         const_reverse_iterator& operator++() {
-            data_--;
+            pos_--;
             return *this;
         }
-        const_reference operator*() const { return *data_; }
-        const_pointer operator->() const { return data_; }
+        const_reference operator*() const { return *(data_.get().data_ + pos_); }
+        const_pointer operator->() const { return data_.get().data_ + pos_; }
 
     private:
-        pointer data_;
+        std::reference_wrapper<const vector> data_;
+        size_type pos_;
     };
 
     vector() : data_(nullptr), capacity_(0), size_(0) {}
@@ -238,29 +251,29 @@ public:
         return data_;
     }
 
-    constexpr iterator begin() noexcept { return iterator(data_); }
+    constexpr iterator begin() noexcept { return iterator(std::ref(*this)); }
 
-    constexpr const_iterator begin() const noexcept { return const_iterator(data_); }
+    constexpr const_iterator begin() const noexcept { return const_iterator(std::ref(*this)); }
 
-    constexpr const_iterator cbegin() const noexcept { return const_iterator(data_); }
+    constexpr const_iterator cbegin() const noexcept { return const_iterator(std::ref(*this)); }
 
-    constexpr iterator end() noexcept { return iterator(data_ + size_); }
+    constexpr iterator end() noexcept { return iterator(std::ref(*this), size_); }
 
-    constexpr const_iterator end() const noexcept { return const_iterator(data_ + size_); }
+    constexpr const_iterator end() const noexcept { return const_iterator(std::ref(*this), size_); }
 
-    constexpr const_iterator cend() const noexcept { return const_iterator(data_ + size_); }
+    constexpr const_iterator cend() const noexcept { return const_iterator(std::ref(*this), size_); }
 
-    constexpr reverse_iterator rbegin() noexcept { return reverse_iterator(data_ + (size_ - 1)); }
+    constexpr reverse_iterator rbegin() noexcept { return reverse_iterator(std::ref(*this), size_ - 1); }
 
-    constexpr const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(data_ + (size_ - 1)); }
+    constexpr const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(std::ref(*this), size_ - 1); }
 
-    constexpr const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(data_ + (size_ - 1)); }
+    constexpr const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(std::ref(*this), size_ - 1); }
 
-    constexpr reverse_iterator rend() noexcept { return reverse_iterator(data_ - 1); }
+    constexpr reverse_iterator rend() noexcept { return reverse_iterator(std::ref(*this), -1); }
 
-    constexpr const_reverse_iterator rend() const noexcept { return const_reverse_iterator(data_ - 1); }
+    constexpr const_reverse_iterator rend() const noexcept { return const_reverse_iterator(std::ref(*this), -1); }
 
-    constexpr const_reverse_iterator crend() const noexcept { return const_reverse_iterator(data_ - 1); }
+    constexpr const_reverse_iterator crend() const noexcept { return const_reverse_iterator(std::ref(*this), -1); }
 
     bool empty() const noexcept { return size_ == 0; }
 
@@ -294,6 +307,11 @@ public:
 
     void clear() noexcept {
         size_ = 0;
+    }
+
+    iterator insert(const_iterator pos, const T& value) {
+        ++pos;
+        push_back(value);
     }
 
     void swap(vector& other) {

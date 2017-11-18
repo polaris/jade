@@ -20,7 +20,7 @@ public:
     class iterator {
     public:
         iterator() : data_(nullptr) {}
-        iterator(pointer data) : data_(data) {}
+        explicit iterator(pointer data) : data_(data) {}
         iterator(const iterator& other) : data_(other.data_) {}
         ~iterator() {}
 
@@ -44,7 +44,7 @@ public:
     class const_iterator {
     public:
         const_iterator() : data_(nullptr) {}
-        const_iterator(pointer data) : data_(data) {}
+        explicit const_iterator(pointer data) : data_(data) {}
         const_iterator(const const_iterator& other) : data_(other.data_) {}
         ~const_iterator() {}
 
@@ -68,7 +68,7 @@ public:
     class reverse_iterator {
     public:
         reverse_iterator() : data_(nullptr) {}
-        reverse_iterator(pointer data) : data_(data) {}
+        explicit reverse_iterator(pointer data) : data_(data) {}
         reverse_iterator(const reverse_iterator& other) : data_(other.data_) {}
         ~reverse_iterator() {}
 
@@ -92,7 +92,7 @@ public:
     class const_reverse_iterator {
     public:
         const_reverse_iterator() : data_(nullptr) {}
-        const_reverse_iterator(pointer data) : data_(data) {}
+        explicit const_reverse_iterator(pointer data) : data_(data) {}
         const_reverse_iterator(const const_reverse_iterator& other) : data_(other.data_) {}
         ~const_reverse_iterator() {}
 

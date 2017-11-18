@@ -14,13 +14,11 @@ public:
     typedef T& reference;
     typedef const T& const_reference;
     typedef T* pointer;
+    typedef const T* const_pointer;
     typedef std::size_t size_type;
 
     class iterator {
     public:
-        typedef T& reference;
-        typedef T* pointer;
-
         iterator() : data_(nullptr) {}
         iterator(pointer data) : data_(data) {}
         iterator(const iterator& other) : data_(other.data_) {}
@@ -36,8 +34,8 @@ public:
             data_++;
             return *this;
         }
-        reference operator*() const { return *data_; }
-        pointer operator->() const { return data_; }
+        const_reference operator*() const { return *data_; }
+        const_pointer operator->() const { return data_; }
 
     private:
         pointer data_;
@@ -45,9 +43,6 @@ public:
 
     class const_iterator {
     public:
-        typedef const T& reference;
-        typedef const T* pointer;
-
         const_iterator() : data_(nullptr) {}
         const_iterator(pointer data) : data_(data) {}
         const_iterator(const const_iterator& other) : data_(other.data_) {}
@@ -63,8 +58,8 @@ public:
             data_++;
             return *this;
         }
-        reference operator*() const { return *data_; }
-        pointer operator->() const { return data_; }
+        const_reference operator*() const { return *data_; }
+        const_pointer operator->() const { return data_; }
 
     private:
         pointer data_;
@@ -72,9 +67,6 @@ public:
 
     class reverse_iterator {
     public:
-        typedef T& reference;
-        typedef T* pointer;
-
         reverse_iterator() : data_(nullptr) {}
         reverse_iterator(pointer data) : data_(data) {}
         reverse_iterator(const reverse_iterator& other) : data_(other.data_) {}
@@ -90,8 +82,8 @@ public:
             data_--;
             return *this;
         }
-        reference operator*() const { return *data_; }
-        pointer operator->() const { return data_; }
+        const_reference operator*() const { return *data_; }
+        const_pointer operator->() const { return data_; }
 
     private:
         pointer data_;
@@ -99,9 +91,6 @@ public:
 
     class const_reverse_iterator {
     public:
-        typedef const T& reference;
-        typedef const T* pointer;
-
         const_reverse_iterator() : data_(nullptr) {}
         const_reverse_iterator(pointer data) : data_(data) {}
         const_reverse_iterator(const const_reverse_iterator& other) : data_(other.data_) {}
@@ -117,8 +106,8 @@ public:
             data_--;
             return *this;
         }
-        reference operator*() const { return *data_; }
-        pointer operator->() const { return data_; }
+        const_reference operator*() const { return *data_; }
+        const_pointer operator->() const { return data_; }
 
     private:
         pointer data_;

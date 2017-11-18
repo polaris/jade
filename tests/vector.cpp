@@ -376,3 +376,9 @@ TEST_CASE("clear() removes all elements from the container", "[vector]") {
     v.clear();
     REQUIRE(v.size() == 0);
 }
+
+TEST_CASE("empty vector", "[vector]") {
+    jade::vector<int> v;
+    REQUIRE(v.empty() == true);
+    REQUIRE(v.begin() == v.end());
+}

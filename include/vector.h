@@ -16,6 +16,7 @@ public:
     typedef T* pointer;
     typedef const T* const_pointer;
     typedef std::size_t size_type;
+    typedef std::size_t difference_type;
 
     class iterator {
     public:

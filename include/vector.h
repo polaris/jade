@@ -303,15 +303,7 @@ public:
     }
 
     void push_back(const_reference value) {
-        if (size_ == capacity_) {
-            if (capacity_ != 0) {
-                const size_type new_size = 2 * capacity_;
-                reserve(new_size);
-            } else {
-                capacity_ = 1;
-                data_ = new value_type[capacity_];
-            }
-        }
+        expand();
         data_[size_++] = value;
     }
 
@@ -325,6 +317,18 @@ private:
         capacity_ = 0;
         delete[] data_;
         data_ = nullptr;
+    }
+
+    void expand() {
+        if (size_ == capacity_) {
+            if (capacity_ != 0) {
+                const size_type new_size = 2 * capacity_;
+                reserve(new_size);
+            } else {
+                capacity_ = 1;
+                data_ = new value_type[capacity_];
+            }
+        }
     }
 };
 

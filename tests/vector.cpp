@@ -382,3 +382,24 @@ TEST_CASE("empty vector", "[vector]") {
     REQUIRE(v.empty() == true);
     REQUIRE(v.begin() == v.end());
 }
+
+TEST_CASE("distance between two iterators", "[vector]") {
+    jade::vector<int> v{1,2,3};
+    jade::vector<int>::difference_type dist = 0;
+    auto itr = v.begin();
+    dist = v.end() - itr;
+    REQUIRE(dist == 3);
+    REQUIRE(*itr == 1);
+    ++itr;
+    dist = v.end() - itr;
+    REQUIRE(dist == 2);
+    REQUIRE(*itr == 2);
+    ++itr;
+    dist = v.end() - itr;
+    REQUIRE(dist == 1);
+    REQUIRE(*itr == 3);
+    ++itr;
+    dist = v.end() - itr;
+    REQUIRE(dist == 0);
+    REQUIRE(itr == v.end());
+}

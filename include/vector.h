@@ -41,6 +41,10 @@ public:
         reference operator*() const { return *(data_.get().data_ + pos_); }
         pointer operator->() const { return data_.get().data_ + pos_; }
 
+        difference_type operator-(iterator itr) const {
+            return pos_ - itr.pos_;
+        }
+
     private:
         std::reference_wrapper<vector> data_;
         size_type pos_;
@@ -67,6 +71,10 @@ public:
         }
         const_reference operator*() const { return *(data_.get().data_ + pos_); }
         const_pointer operator->() const { return data_.get().data_ + pos_; }
+
+        difference_type operator-(const_iterator itr) const {
+            return pos_ - itr.pos_;
+        }
 
     private:
         std::reference_wrapper<const vector> data_;
@@ -95,6 +103,10 @@ public:
         reference operator*() const { return *(data_.get().data_ + pos_); }
         pointer operator->() const { return data_.get().data_ + pos_; }
 
+        difference_type operator-(reverse_iterator itr) const {
+            return pos_ - itr.pos_;
+        }
+
     private:
         std::reference_wrapper<vector> data_;
         size_type pos_;
@@ -121,6 +133,10 @@ public:
         }
         const_reference operator*() const { return *(data_.get().data_ + pos_); }
         const_pointer operator->() const { return data_.get().data_ + pos_; }
+
+        difference_type operator-(const_reverse_iterator itr) const {
+            return pos_ - itr.pos_;
+        }
 
     private:
         std::reference_wrapper<const vector> data_;

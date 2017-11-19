@@ -407,8 +407,10 @@ TEST_CASE("distance between two iterators", "[vector]") {
 TEST_CASE("inserts an element at a specified position in the vector", "[vector]") {
     SECTION("insert at begin of vector") {
         jade::vector<int> v{1,2,3};
-        auto itr = v.insert(v.cbegin(), 0);
+        auto citr = v.cbegin();
+        auto itr = v.insert(citr, 0);
         REQUIRE(*itr == 0);
+        REQUIRE(*citr == 0);
         REQUIRE(v[0] == 0);
         REQUIRE(v[1] == 1);
         REQUIRE(v[2] == 2);
@@ -420,6 +422,7 @@ TEST_CASE("inserts an element at a specified position in the vector", "[vector]"
         ++citr;
         auto itr = v.insert(citr, 0);
         REQUIRE(*itr == 0);
+        REQUIRE(*citr == 0);
         REQUIRE(v[0] == 1);
         REQUIRE(v[1] == 0);
         REQUIRE(v[2] == 2);
@@ -427,8 +430,10 @@ TEST_CASE("inserts an element at a specified position in the vector", "[vector]"
     }
     SECTION("insert at end of vector") {
         jade::vector<int> v{1,2,3};
-        auto itr = v.insert(v.cend(), 0);
+        auto citr = v.cend();
+        auto itr = v.insert(citr, 0);
         REQUIRE(*itr == 0);
+        REQUIRE(*citr == 0);
         REQUIRE(v[0] == 1);
         REQUIRE(v[1] == 2);
         REQUIRE(v[2] == 3);

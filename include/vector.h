@@ -329,8 +329,9 @@ public:
         expand();
         difference_type dist = pos - cbegin();
         std::size_t i = size_ - 1;
-        for (; i > dist; --i) {
+        while (i > dist) {
             data_[i+1] = data_[i];
+            i--;
         }
         data_[i+1] = data_[i];
         data_[dist] = value;

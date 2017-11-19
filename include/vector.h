@@ -339,6 +339,20 @@ public:
         return iterator(*this, dist);
     }
 
+    iterator insert(const_iterator pos, T&& value) {
+        expand();
+        difference_type dist = pos - cbegin();
+        std::size_t i = size_ - 1;
+        while (i > dist) {
+            data_[i+1] = std::move(data_[i]);
+            i--;
+        }
+        data_[i+1] = data_[i];
+        data_[dist] = std::move(value);
+        size_ += 1;
+        return iterator(*this, dist);
+    }
+
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(capacity_, other.capacity_);

@@ -408,11 +408,12 @@ TEST_CASE("inserts an element at a specified position in the vector", "[vector]"
     SECTION("insert at begin of vector") {
         jade::vector<int> v{1,2,3};
         auto citr = v.cbegin();
-        auto itr = v.insert(citr, 0);
+        const int value = 123;
+        auto itr = v.insert(citr, value);
         REQUIRE(v.size() == 4);
-        REQUIRE(*itr == 0);
-        REQUIRE(*citr == 0);
-        REQUIRE(v[0] == 0);
+        REQUIRE(*itr == value);
+        REQUIRE(*citr == value);
+        REQUIRE(v[0] == value);
         REQUIRE(v[1] == 1);
         REQUIRE(v[2] == 2);
         REQUIRE(v[3] == 3);
@@ -421,25 +422,67 @@ TEST_CASE("inserts an element at a specified position in the vector", "[vector]"
         jade::vector<int> v{1,2,3};
         auto citr = v.cbegin();
         ++citr;
-        auto itr = v.insert(citr, 0);
+        const int value = 123;
+        auto itr = v.insert(citr, value);
         REQUIRE(v.size() == 4);
-        REQUIRE(*itr == 0);
-        REQUIRE(*citr == 0);
+        REQUIRE(*itr == value);
+        REQUIRE(*citr == value);
         REQUIRE(v[0] == 1);
-        REQUIRE(v[1] == 0);
+        REQUIRE(v[1] == value);
         REQUIRE(v[2] == 2);
         REQUIRE(v[3] == 3);
     }
     SECTION("insert at end of vector") {
         jade::vector<int> v{1,2,3};
         auto citr = v.cend();
-        auto itr = v.insert(citr, 0);
+        const int value = 123;
+        auto itr = v.insert(citr, value);
         REQUIRE(v.size() == 4);
-        REQUIRE(*itr == 0);
-        REQUIRE(*citr == 0);
+        REQUIRE(*itr == value);
+        REQUIRE(*citr == value);
         REQUIRE(v[0] == 1);
         REQUIRE(v[1] == 2);
         REQUIRE(v[2] == 3);
-        REQUIRE(v[3] == 0);
+        REQUIRE(v[3] == value);
+    }
+}
+
+TEST_CASE("move inserts an element at a specified position in the vector", "[vector]") {
+    SECTION("move insert at begin of vector") {
+        jade::vector<int> v{1,2,3};
+        auto citr = v.cbegin();
+        auto itr = v.insert(citr, 123);
+        REQUIRE(v.size() == 4);
+        REQUIRE(*itr == 123);
+        REQUIRE(*citr == 123);
+        REQUIRE(v[0] == 123);
+        REQUIRE(v[1] == 1);
+        REQUIRE(v[2] == 2);
+        REQUIRE(v[3] == 3);
+    }
+    SECTION("insert inbetween elements") {
+        jade::vector<int> v{1,2,3};
+        auto citr = v.cbegin();
+        ++citr;
+        auto itr = v.insert(citr, 123);
+        REQUIRE(v.size() == 4);
+        REQUIRE(*itr == 123);
+        REQUIRE(*citr == 123);
+        REQUIRE(v[0] == 1);
+        REQUIRE(v[1] == 123);
+        REQUIRE(v[2] == 2);
+        REQUIRE(v[3] == 3);
+    }
+    SECTION("insert at end of vector") {
+        jade::vector<int> v{1,2,3};
+        auto citr = v.cend();
+        auto itr = v.insert(citr, 123);
+        REQUIRE(v.size() == 4);
+        REQUIRE(*itr == 123);
+        REQUIRE(*citr == 123);
+        REQUIRE(v[0] == 1);
+        REQUIRE(v[1] == 2);
+        REQUIRE(v[2] == 3);
+        REQUIRE(v[3] == 123);
     }
 }
